@@ -5,11 +5,11 @@ import re
 import aiohttp
 
 client = discord.Client()
-client.aiohttp_session = aiohttp.ClientSession(loop=client.loop)
 
 async def getRequest(url, **kwargs):
     await asyncio.sleep(0.1)
-    async with client.aiohttp_session.get(url, **kwargs) as response:
+    async with aiohttp.ClientSession(loop=client.loop) as session:
+        response = await session.get(url, **kwargs)
         return await response.json()
 
 async def getFormattedCard(name: str) -> list[discord.Embed]:
