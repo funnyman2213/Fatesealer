@@ -3,9 +3,13 @@ import discord
 import os
 import re
 import aiohttp
+from functools import lru_cache
+from utils import cacheable
 
 client = discord.Client()
 
+@lru_cache()
+@cacheable
 async def getRequest(url, **kwargs):
     await asyncio.sleep(0.1)
     async with aiohttp.ClientSession(loop=client.loop) as session:
@@ -55,8 +59,9 @@ async def on_message(message: discord.Message):
         groups = re.findall(r'\B\[([^\[\]]*)\]\B', message.content)
         if groups:
             for name in groups:
-                cards = await getFormattedCard(name)
-                for card in cards:
-                    await message.channel.send(embed=card)
+                async with message.channel.typing():
+                    cards = await getFormattedCard(name)
+                    for card in cards:
+                        await message.channel.send(embed=card)
 
 client.run(os.environ.get("DISCORD"))
