@@ -1,50 +1,9 @@
-import asyncio
 import discord
 import os
 import re
-import aiohttp
-from functools import lru_cache
-from utils import cacheable
+from cards import *
 
 client = discord.Client()
-
-@lru_cache()
-@cacheable
-async def getRequest(url, **kwargs):
-    await asyncio.sleep(0.1)
-    async with aiohttp.ClientSession(loop=client.loop) as session:
-        response = await session.get(url, **kwargs)
-        return await response.json()
-
-async def getFormattedCard(name: str) -> list[discord.Embed]:
-    card = await getRequest(url='http://api.scryfall.com/cards/named?', params={'fuzzy':name})
-    messages: list[discord.Embed] = list()
-
-    if card['object'] == 'error':
-        return discord.Embed(
-            description = "an error has occured. {}".format(re.sub(r'\(|\'|,|\)+', '', card['details']))
-        )
-    
-    if 'card_faces' in card:
-        for entry in card['card_faces']:
-            message = discord.Embed(
-                title="**{}**".format(entry['name']),
-                url=card['scryfall_uri'],
-                color=discord.Colour(0x1b6f9)
-            )
-            message.set_image(url=entry['image_uris']['normal'])
-            messages.append(message)
-        return messages
-    
-    message = discord.Embed(
-        title="**{}**".format(card['name']),
-        url=card['scryfall_uri'],
-        color=discord.Colour(0x1b6f9)
-    )
-
-    message.set_image(url=card['image_uris']['normal'])
-    messages.append(message)
-    return messages
 
 @client.event
 async def on_ready():
@@ -60,7 +19,7 @@ async def on_message(message: discord.Message):
         if groups:
             for name in groups:
                 async with message.channel.typing():
-                    cards = await getFormattedCard(name)
+                    cards = await getCardByName(name)
                     for card in cards:
                         await message.channel.send(embed=card)
 
