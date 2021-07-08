@@ -1,6 +1,8 @@
-import discord
 import os
 import re
+
+import discord
+
 from cards import *
 
 client = discord.Client()
@@ -17,10 +19,15 @@ async def on_message(message: discord.Message):
     if "[" in message.content and "]" in message.content:
         groups = re.findall(r'\B\[([^\[\]]*)\]\B', message.content)
         if groups:
-            for name in groups:
+            for group in groups:
                 async with message.channel.typing():
-                    cards = await getCardByName(name)
-                    for card in cards:
-                        await message.channel.send(embed=card)
+                    if group.startswith('!s '):
+                        cards = await getCardFromSearch(group[3:])
+                        for card in cards:
+                            await message.channel.send(embed=card)
+                    else:
+                        cards = await getCardByName(group)
+                        for card in cards:
+                            await message.channel.send(embed=card)
 
 client.run(os.environ.get("DISCORD"))

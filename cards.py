@@ -4,6 +4,7 @@ from functools import lru_cache
 
 import aiohttp
 import discord
+import urllib.parse as urlparse
 
 from utils import cacheable
 
@@ -45,5 +46,38 @@ async def getCardByName(name: str) -> list[discord.Embed]:
     )
 
     message.set_image(url=card['image_uris']['normal'])
+    messages.append(message)
+    return messages
+
+async def getCardFromSearch(search: str) -> list[discord.Embed]:
+    cards = await getRequest(url='http://api.scryfall.com/cards/search?', params={'q':urlparse.urlencode(search)})
+    messages: list[discord.Embed]= list()
+    
+    # returns if error ie. no results found
+    if cards['object'] == 'error':
+        return list(discord.Embed(
+            description = "an error has occured. {}".format(re.sub(r'\(|\'|,|\)+', '', cards['details']))
+        ))
+
+    # returns the first result of the search
+    firstResult = cards['data'][0]
+    if 'card_faces' in firstResult:
+        for entry in firstResult['card_faces']:
+            message = discord.Embed(
+                title="**{}**".format(entry['name']),
+                url=firstResult['scryfall_uri'],
+                color=COLOUR
+            )
+            message.set_image(url=entry['image_uris']['normal'])
+            messages.append(message)
+        return messages
+    
+    message = discord.Embed(
+        title="**{}**".format(firstResult['name']),
+        url=firstResult['scryfall_uri'],
+        color=COLOUR
+    )
+
+    message.set_image(url=firstResult['image_uris']['normal'])
     messages.append(message)
     return messages
