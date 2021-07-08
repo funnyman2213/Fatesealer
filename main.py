@@ -5,7 +5,6 @@ import re
 
 import aiohttp
 import discord
-import urllib.parse as urlparse
 
 import discord
 
