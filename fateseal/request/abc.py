@@ -6,7 +6,7 @@ from fateseal.error import Error
 from fateseal.catalog import Catalog
 from fateseal.bulkdata import BulkData
 from fateseal.card import Card
-from typing import Dict, Optional
+from typing import Dict, List, Optional, Tuple, Any
 from fateseal.abc import ScryfallObject
 
 from abc import ABC
@@ -18,6 +18,9 @@ class RequestType(ABC):
     base_uri = "https://api.scryfall.com"
     endpoint: str
     params: Optional[Dict[str, str]] = None
+
+    def _set_paramaters(self, params:List[Tuple[str, Any]] ) -> None:
+        self.params = {key:str(value) for (key, value) in params if value is not None}
 
     def _interpret(self, object:str) -> ScryfallObject:
         objects = {
