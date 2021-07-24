@@ -3,6 +3,9 @@ import re
 import asyncio
 import re
 
+import fateseal
+import fateseal.request
+
 import aiohttp
 import discord
 
@@ -42,65 +45,68 @@ async def getRequest(url, **kwargs):
         return await response.json()
 
 async def getCardByName(name: str) -> list[discord.Embed]:
-    card = await getRequest(url='http://api.scryfall.com/cards/named?', params={'fuzzy':name})
+    card: fateseal.Card = await fateseal.request.cards.Named(fuzzy=name).async_get()
     messages: list[discord.Embed] = list()
 
-    if card['object'] == 'error':
+    if card.object == 'error':
+        error: fateseal.Error = card
         return [discord.Embed(
-            description = "an error has occured. {}".format(re.sub(r'\(|\'|,|\)+', '', card['details']))
+            description = "an error has occured. {}".format(re.sub(r'\(|\'|,|\)+', '', error.details))
         ),]
     
-    if 'card_faces' in card:
-        for entry in card['card_faces']:
+    if card.card_faces:
+        for entry in card.card_faces:
             message = discord.Embed(
-                title="**{}**".format(entry['name']),
-                url=card['scryfall_uri'],
+                title="**{}**".format(entry.name),
+                url=card.scryfall_uri,
                 color=COLOUR
             )
-            message.set_image(url=entry['image_uris']['normal'])
+            message.set_image(url=entry.image_uris.normal)
             messages.append(message)
         return messages
     
     message = discord.Embed(
-        title="**{}**".format(card['name']),
-        url=card['scryfall_uri'],
+        title="**{}**".format(card.name),
+        url=card.scryfall_uri,
         color=COLOUR
     )
 
-    message.set_image(url=card['image_uris']['normal'])
+    message.set_image(url=card.image_uris.normal)
     messages.append(message)
     return messages
 
 async def getCardFromSearch(search: str) -> list[discord.Embed]:
-    cards = await getRequest(url='http://api.scryfall.com/cards/search?', params={'q':search})
+    objlist = await fateseal.request.cards.Search(search).async_get()
     messages: list[discord.Embed]= list()
     
     # returns if error ie. no results found
-    if cards['object'] == 'error':
+    if objlist.object == 'error':
+        objlist: fateseal.Error = objlist
         return [discord.Embed(
-            description = "an error has occured. {}".format(re.sub(r'\(|\'|,|\)+', '', cards['details']))
+            description = "an error has occured. {}".format(re.sub(r'\(|\'|,|\)+', '', objlist.details))
         ),]
 
+    objlist: fateseal.ObjList = objlist
     # returns the first result of the search
-    firstResult = cards['data'][0]
-    if 'card_faces' in firstResult:
-        for entry in firstResult['card_faces']:
+    card: fateseal.Card = objlist.data[0]
+    if card.card_faces:
+        for entry in card.card_faces:
             message = discord.Embed(
-                title="**{}**".format(entry['name']),
-                url=firstResult['scryfall_uri'],
+                title="**{}**".format(entry.name),
+                url=card.scryfall_uri,
                 color=COLOUR
             )
-            message.set_image(url=entry['image_uris']['normal'])
+            message.set_image(url=entry.image_uris.normal)
             messages.append(message)
         return messages
     
     message = discord.Embed(
-        title="**{}**".format(firstResult['name']),
-        url=firstResult['scryfall_uri'],
+        title="**{}**".format(card.name),
+        url=card.scryfall_uri,
         color=COLOUR
     )
 
-    message.set_image(url=firstResult['image_uris']['normal'])
+    message.set_image(url=card.image_uris.normal)
     messages.append(message)
     return messages
 
