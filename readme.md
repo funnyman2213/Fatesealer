@@ -11,4 +11,4 @@ An example would be:
 
 The bot will return a simple embed with the Card queried and a link to the Scryfall page for more information.
 
-![https://imgur.com/a/bDnAe2X]
+![test](https://i.imgur.com/RhREBIR.png)
