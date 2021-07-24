@@ -38,5 +38,9 @@ class RequestType(ABC):
         return self._interpret(r.json()["object"]).parse_raw(r.text)
 
     async def async_get(self) -> ScryfallObject:
-        pass #TODO: impliment asyncronous get using aiohttp library
+        async with aiohttp.ClientSession() as session:
+            async with session.get(self.base_uri + self.endpoint, params=self.params) as response:   
+                responseJson = await response.json()
+                objectType = self._interpret(responseJson['object'])
+                return objectType.parse_raw(await response.text())
 
