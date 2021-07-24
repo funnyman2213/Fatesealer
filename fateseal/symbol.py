@@ -1,9 +1,8 @@
+from fateseal.abc import ScryfallObject
 from fateseal.card import MANACOLOR
 from typing import List, Optional
-from pydantic import BaseModel
 
-class CardSymbol(BaseModel):
-    object: str
+class CardSymbol(ScryfallObject):
     english: str
     transposable: bool
     represents_mana: bool

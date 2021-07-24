@@ -1,3 +1,4 @@
+from fateseal.abc import ScryfallObject
 from pydantic import BaseModel
 from uuid import UUID
 from typing import Literal, Optional, List
@@ -84,11 +85,10 @@ class CardFace(BaseModel):
     toughness: Optional[str] = None
     watermark: Optional[str] = None
 
-class Card(BaseModel):
+class Card(ScryfallObject):
     # Core Atributes
     id: str #uuid
     lang: str
-    object: str
     oracle_id: UUID #UUID
     prints_search_uri: str #uri
     rulings_uri: str #uri

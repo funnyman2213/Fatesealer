@@ -1,8 +1,7 @@
-from pydantic import BaseModel
+from fateseal.abc import ScryfallObject
 from uuid import UUID
 
-class Ruling(BaseModel):
-    object: str
+class Ruling(ScryfallObject):
     oracle_id: UUID
     source: str
     published_at: str

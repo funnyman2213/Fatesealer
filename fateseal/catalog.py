@@ -1,8 +1,7 @@
+from fateseal.abc import ScryfallObject
 from typing import List
-from pydantic import BaseModel
 
-class Catalog(BaseModel):
-    object: str
+class Catalog(ScryfallObject):
     uri: str #URI
     total_values: int
     data: List[str]

@@ -1,8 +1,7 @@
-from pydantic import BaseModel
+from fateseal.abc import ScryfallObject
 from uuid import UUID
 
-class BulkData(BaseModel):
-    object: str
+class BulkData(ScryfallObject):
     id: UUID
     uri: str
     type: str

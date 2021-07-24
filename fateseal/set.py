@@ -1,9 +1,8 @@
+from fateseal.abc import ScryfallObject
 from typing import Optional
-from pydantic import BaseModel
 from uuid import UUID
 
-class CardSet(BaseModel):
-    object: str
+class CardSet(ScryfallObject):
     id: UUID
     code: str
     name: str

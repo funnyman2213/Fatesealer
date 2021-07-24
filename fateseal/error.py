@@ -1,8 +1,7 @@
+from fateseal.abc import ScryfallObject
 from typing import List, Optional
-from pydantic import BaseModel
 
-class Error(BaseModel):
-    object: str
+class Error(ScryfallObject):
     code: str
     status: int
     details: str
