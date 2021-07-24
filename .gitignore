@@ -140,5 +140,8 @@ cython_debug/
 # Visual studio code
 .vscode/
 
+# Fatesealer
+fateseal/
+
 # Unit tests
 test/
