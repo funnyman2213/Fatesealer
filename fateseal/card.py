@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from uuid import UUID
 from typing import Literal, Optional, List
 
-MANACOLOR = Literal['W', "U", "B", "R", "G"]
+MANACOLOR = Literal['W', "U", "B", "R", "G", "C"]
 Legality = Literal["legal","not_legal","restricted","banned"]
 
 class Legalities(BaseModel):
