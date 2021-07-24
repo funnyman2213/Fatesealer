@@ -5,5 +5,5 @@ class Error(ScryfallObject):
     code: str
     status: int
     details: str
-    type: Optional[str] = None
-    warnings: Optional[List[str]] = None
+    type: Optional[str]
+    warnings: Optional[List[str]]

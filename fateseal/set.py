@@ -16,10 +16,10 @@ class CardSet(ScryfallObject):
     icon_svg_uri: str #URI
     search_uri: str #URI
 
-    mtgo_code: Optional[str] = None
-    tcgplayter_id: Optional[int] = None
-    released_at: Optional[str] = None
-    block_code: Optional[str] = None
-    block: Optional[str] = None
-    parent_set_code: Optional[str] = None
-    printed_size: Optional[int] = None
+    mtgo_code: Optional[str]
+    tcgplayter_id: Optional[int]
+    released_at: Optional[str]
+    block_code: Optional[str]
+    block: Optional[str]
+    parent_set_code: Optional[str]
+    printed_size: Optional[int]

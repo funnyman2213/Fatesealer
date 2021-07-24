@@ -24,36 +24,36 @@ class Legalities(BaseModel):
     premodern: Legality
 
 class ImageUris(BaseModel):
-    png: Optional[str] = None
-    border_crop: Optional[str] = None
-    art_crop: Optional[str] = None
-    large: Optional[str] = None
-    normal: Optional[str] = None
-    small: Optional[str] = None
+    png: Optional[str]
+    border_crop: Optional[str]
+    art_crop: Optional[str]
+    large: Optional[str]
+    normal: Optional[str]
+    small: Optional[str]
 
 class Prices(BaseModel):
-    usd: Optional[str] = None
-    usd_foil: Optional[str] = None
-    eur: Optional[str] = None
-    eur_foil: Optional[str] = None
-    tix: Optional[str] = None
+    usd: Optional[str]
+    usd_foil: Optional[str]
+    eur: Optional[str]
+    eur_foil: Optional[str]
+    tix: Optional[str]
 
 class PurchaseUris(BaseModel):
-    tcgplayer: Optional[str] = None
-    cardmarket: Optional[str] = None
-    cardhoarder: Optional[str] = None
+    tcgplayer: Optional[str]
+    cardmarket: Optional[str]
+    cardhoarder: Optional[str]
 
 class RelatedUris(BaseModel):
-    gatherer: Optional[str] = None
-    tcgplayer_infinite_articles: Optional[str] = None
-    tcgplayer_infinite_decks: Optional[str] = None
-    edhrec: Optional[str] = None
-    mtgtop8: Optional[str] = None
+    gatherer: Optional[str]
+    tcgplayer_infinite_articles: Optional[str]
+    tcgplayer_infinite_decks: Optional[str]
+    edhrec: Optional[str]
+    mtgtop8: Optional[str]
 
 class Preview(BaseModel):
-    previewed_at: Optional[str] = None
-    source_uri: Optional[str] = None
-    source: Optional[str] = None
+    previewed_at: Optional[str]
+    source_uri: Optional[str]
+    source: Optional[str]
 
 class RelatedCards(BaseModel):
     id: UUID #UUID
@@ -69,21 +69,21 @@ class CardFace(BaseModel):
     object: str
     type_line: str
 
-    artist: Optional[str] = None
-    artist_ids: Optional[List[str]] = None
-    color_indicator: Optional[List[MANACOLOR]] = None
-    colors: Optional[List[MANACOLOR]] = None
-    flavor_text: Optional[str] = None
-    illustration_id: Optional[UUID] = None #UUID
-    image_uris: Optional[ImageUris] = None 
-    loyalty: Optional[str] = None
-    oracle_text: Optional[str] = None
-    power: Optional[str] = None
-    printed_name: Optional[str] = None
-    printed_text: Optional[str] = None
-    printed_type_line: Optional[str] = None
-    toughness: Optional[str] = None
-    watermark: Optional[str] = None
+    artist: Optional[str]
+    artist_ids: Optional[List[str]]
+    color_indicator: Optional[List[MANACOLOR]]
+    colors: Optional[List[MANACOLOR]]
+    flavor_text: Optional[str]
+    illustration_id: Optional[UUID] #UUID
+    image_uris: Optional[ImageUris] 
+    loyalty: Optional[str]
+    oracle_text: Optional[str]
+    power: Optional[str]
+    printed_name: Optional[str]
+    printed_text: Optional[str]
+    printed_type_line: Optional[str]
+    toughness: Optional[str]
+    watermark: Optional[str]
 
 class Card(ScryfallObject):
     # Core Atributes
@@ -138,41 +138,41 @@ class Card(ScryfallObject):
     variation: bool
 
     # Core Optionals
-    arena_id: Optional[int] = None
-    mtgo_id: Optional[int] = None
-    mtgo_foil_id: Optional[int] = None
-    multiverse_ids: Optional[List[int]] = None
-    tcgplayer_id: Optional[int] = None
-    cardmarket_id: Optional[int] = None
+    arena_id: Optional[int]
+    mtgo_id: Optional[int]
+    mtgo_foil_id: Optional[int]
+    multiverse_ids: Optional[List[int]]
+    tcgplayer_id: Optional[int]
+    cardmarket_id: Optional[int]
 
     # Gameplay Optionals
-    all_parts: Optional[List[RelatedCards]] = None
-    card_faces: Optional[List[CardFace]] = None
-    color_idicator: Optional[List[MANACOLOR]] = None
-    colors: Optional[List[MANACOLOR]] = None
-    edhrec_rank: Optional[int] = None
-    hand_modfier: Optional[str] = None
-    life_modifier: Optional[str] = None
-    loyalty: Optional[str] = None
-    mana_cost: Optional[str] = None
-    oracle_text: Optional[str] = None
-    power: Optional[str] = None
-    produced_mana: Optional[List[MANACOLOR]] = None
-    toughness: Optional[str] = None
+    all_parts: Optional[List[RelatedCards]]
+    card_faces: Optional[List[CardFace]]
+    color_idicator: Optional[List[MANACOLOR]]
+    colors: Optional[List[MANACOLOR]]
+    edhrec_rank: Optional[int]
+    hand_modfier: Optional[str]
+    life_modifier: Optional[str]
+    loyalty: Optional[str]
+    mana_cost: Optional[str]
+    oracle_text: Optional[str]
+    power: Optional[str]
+    produced_mana: Optional[List[MANACOLOR]]
+    toughness: Optional[str]
 
     # Print Optionals
-    artist: Optional[str] = None
-    artist_ids: Optional[List[str]] = None
-    content_warning: Optional[bool] = None
-    flavor_name: Optional[str] = None
-    flavor_text: Optional[str] = None
-    frame_effects: Optional[List[str]] = None
-    illustration_id: Optional[UUID] = None #UUID
-    image_uris: Optional[ImageUris] = None #URI
-    printed_name: Optional[str] = None
-    printed_text: Optional[str] = None
-    printed_type_line: Optional[str] = None
-    promo_types: Optional[List[str]] = None
-    variation_of: Optional[UUID] = None #UUID
-    watermark: Optional[str] = None
-    preview: Optional[Preview] = None
+    artist: Optional[str]
+    artist_ids: Optional[List[str]]
+    content_warning: Optional[bool]
+    flavor_name: Optional[str]
+    flavor_text: Optional[str]
+    frame_effects: Optional[List[str]]
+    illustration_id: Optional[UUID] #UUID
+    image_uris: Optional[ImageUris] #URI
+    printed_name: Optional[str]
+    printed_text: Optional[str]
+    printed_type_line: Optional[str]
+    promo_types: Optional[List[str]]
+    variation_of: Optional[UUID] #UUID
+    watermark: Optional[str]
+    preview: Optional[Preview]
