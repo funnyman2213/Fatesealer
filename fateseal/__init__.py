@@ -7,6 +7,8 @@ from fateseal.ruling import Ruling
 from fateseal.set import CardSet
 from fateseal.symbol import CardSymbol
 
+import fateseal.request
+
 from .catalog import Catalog
 __all__ = [
     'BulkData',
