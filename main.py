@@ -1,15 +1,10 @@
 import os
 import re
-import asyncio
-import re
 
 import fateseal
-import fateseal.request
-
-import aiohttp
-import discord
 
 import discord
+
 
 client = discord.Client()
 
@@ -37,12 +32,6 @@ async def on_message(message: discord.Message):
                             await message.channel.send(embed=card)
 
 COLOUR = discord.Colour(0x8b23b8)
-
-async def getRequest(url, **kwargs):
-    await asyncio.sleep(0.1)
-    async with aiohttp.ClientSession(loop=client.loop) as session:
-        response = await session.get(url, **kwargs)
-        return await response.json()
 
 async def getCardByName(name: str) -> list[discord.Embed]:
     card: fateseal.Card = await fateseal.request.cards.Named(fuzzy=name).async_get()
@@ -83,7 +72,8 @@ async def getCardFromSearch(search: str) -> list[discord.Embed]:
     if objlist.object == 'error':
         objlist: fateseal.Error = objlist
         return [discord.Embed(
-            description = "an error has occured. {}".format(re.sub(r'\(|\'|,|\)+', '', objlist.details))
+            description = "an error has occured. {}".format(re.sub(r'\(|\'|,|\)+', '', objlist.details)),
+            
         ),]
 
     objlist: fateseal.ObjList = objlist
