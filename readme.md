@@ -10,5 +10,5 @@ An example would be:
  + Have you seen \[Sol ring\]? that card is pretty crazy!
 
 The bot will return a simple embed with the Card queried and a link to the Scryfall page for more information.
- 
-![example][https://imgur.com/a/bDnAe2X "example"]
+
+![https://imgur.com/a/bDnAe2X]
