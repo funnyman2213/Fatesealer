@@ -1,8 +1,8 @@
-from cards.ruling import Ruling
-from cards.bulkdata import BulkData
-from cards.symbol import CardSymbol
-from cards.set import CardSet
-from cards.card import Card
+from fateseal.ruling import Ruling
+from fateseal.bulkdata import BulkData
+from fateseal.symbol import CardSymbol
+from fateseal.set import CardSet
+from fateseal.card import Card
 from pydantic import BaseModel
 from typing import Optional, List, Union
 

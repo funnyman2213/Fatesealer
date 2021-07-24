@@ -1,4 +1,4 @@
-from cards.card import MANACOLOR
+from fateseal.card import MANACOLOR
 from typing import List, Optional
 from pydantic import BaseModel
 
