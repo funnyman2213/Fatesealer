@@ -2,8 +2,8 @@ import os
 import re
 from typing import List
 
-import fateseal.request as req
-import fateseal.models as mod
+import fateseal as fs
+from fateseal.models import Error
 
 import discord
 
@@ -36,10 +36,10 @@ async def on_message(message: discord.Message):
 COLOUR = discord.Colour(0x8b23b8)
 
 async def getCardByName(name: str) -> list[discord.Embed]:
-    card = await req.Request(req.cards.Named(fuzzy=name)).async_get()
+    card = await fs.Request[fs.cards.Named.return_type](fs.cards.Named(fuzzy=name)).async_get()
     messages: List[discord.Embed] = list()
 
-    if not isinstance(card, mod.Error):
+    if not isinstance(card, Error):
         if card.card_faces:
             for entry in card.card_faces:
                 message = discord.Embed(
@@ -67,10 +67,10 @@ async def getCardByName(name: str) -> list[discord.Embed]:
     
     
 async def getCardFromSearch(search: str) -> list[discord.Embed]:
-    cards = await req.Request(req.cards.Search(query=search)).async_get()
+    cards = await fs.Request[fs.cards.Search.return_type](fs.cards.Search(query=search)).async_get()
     messages: List[discord.Embed]= list()
 
-    if not isinstance(cards, mod.Error):
+    if not isinstance(cards, Error):
         card = cards[0]
         if card.card_faces:
             for entry in card.card_faces:
