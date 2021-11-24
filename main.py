@@ -20,7 +20,7 @@ async def on_message(message: discord.Message):
         return
 
     if "[" in message.content and "]" in message.content:
-        groups = re.findall(r'\B\[([^\[\]]*)\]\B', message.content)
+        groups = re.findall(r'\B\[([^\[\]]+)\]\B', message.content)
         if groups:
             for group in groups:
                 async with message.channel.typing():
@@ -33,10 +33,10 @@ async def on_message(message: discord.Message):
                         for card in cards:
                             await message.channel.send(embed=card)
 
-COLOUR = discord.Colour(0x8b23b8)
+COLOUR = discord.Colour.purple
 
 async def getCardByName(name: str) -> list[discord.Embed]:
-    card = await fs.Request[fs.cards.Named.return_type](fs.cards.Named(fuzzy=name)).async_get()
+    card = await fs.cards.Named(fuzzy=name).async_get()
     messages: List[discord.Embed] = list()
 
     if not isinstance(card, Error):
@@ -67,11 +67,11 @@ async def getCardByName(name: str) -> list[discord.Embed]:
     
     
 async def getCardFromSearch(search: str) -> list[discord.Embed]:
-    cards = await fs.Request[fs.cards.Search.return_type](fs.cards.Search(query=search)).async_get()
+    cards = await fs.cards.Search(query=search).async_get()
     messages: List[discord.Embed]= list()
 
     if not isinstance(cards, Error):
-        card = cards[0]
+        card = fs.models.Card.parse_obj(cards[0]) 
         if card.card_faces:
             for entry in card.card_faces:
                 message = discord.Embed(
